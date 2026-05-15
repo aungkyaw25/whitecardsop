@@ -5,263 +5,1572 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>White Card SOP Hub</title>
 <style>
-:root {
-  --bg: #f8fafc;
-  --panel: #ffffff;
-  --ink: #0f172a;
-  --muted: #64748b;
-  --line: #e2e8f0;
-  --soft: #f1f5f9;
-  --blue: #2563eb;
-  --purple: #7c3aed;
-  --teal: #0d9488;
-  --green: #16a34a;
-  --amber: #d97706;
-  --red: #dc2626;
-  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-  --radius: 16px;
-  --active: #2563eb;
+:root{
+  --bg:#f6f7fb;--panel:#fff;--ink:#162033;--muted:#667085;--line:#e4e8f0;--soft:#f9fafb;
+  --blue:#2563eb;--purple:#6f3cc3;--teal:#087f8c;--green:#3f8c2f;--amber:#b45309;--red:#b42318;
+  --shadow:0 10px 28px rgba(16,24,40,.07);--radius:18px;--active:#2563eb;
 }
-* { box-sizing: border-box; transition: all 0.2s ease; }
-html { scroll-behavior: smooth; }
-body { 
-  margin: 0; 
-  background: var(--bg); 
-  color: var(--ink); 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-  line-height: 1.6; 
-  font-size: 15px; 
-}
-button, input, select { font: inherit; }
-a { color: inherit; text-decoration: none; }
-.hidden { display: none !important; }
-
-.app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
-.sidebar { position: sticky; top: 0; height: 100vh; overflow: auto; background: #fff; border-right: 1px solid var(--line); padding: 24px 20px; }
-.brand { display: flex; gap: 14px; align-items: center; margin-bottom: 32px; }
-.logo { width: 44px; height: 44px; border-radius: 12px; background: #0f172a; color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px; }
-.brand h1 { font-size: 18px; margin: 0; font-weight: 700; color: #0f172a; }
-.brand p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
-
-.nav-title { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 24px 8px 8px; font-weight: 700; }
-.nav button, .nav a { width: 100%; display: flex; align-items: center; gap: 12px; color: #475569; padding: 12px 14px; border-radius: 10px; margin: 6px 0; font-size: 14px; background: transparent; border: 0; text-align: left; cursor: pointer; font-weight: 500; }
-.nav button:hover, .nav button.active, .nav a:hover { background: #f0fdf4; color: #16a34a; }
-.dot { width: 8px; height: 8px; border-radius: 999px; background: #94a3b8; }
-.dot.purple { background: var(--purple); }
-.dot.teal { background: var(--teal); }
-.dot.green { background: var(--green); }
-.sidebar-note { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-
-.main { min-width: 0; display: flex; flex-direction: column; }
-.topbar { position: sticky; top: 0; z-index: 30; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); padding: 16px 32px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
-.search-wrap { position: relative; }
-.search-wrap:before { content: "⌕"; position: absolute; left: 16px; top: 8px; color: #64748b; font-size: 22px; }
-.search-wrap input { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #fff; padding: 12px 16px 12px 46px; outline: none; font-size: 14px; }
-.search-wrap input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
-
-.top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.btn { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 10px 16px; cursor: pointer; color: #334155; font-weight: 500; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
-.btn:hover { background: #f8fafc; border-color: #cbd5e1; }
-.btn.primary { background: #0f172a; color: #fff; border-color: #0f172a; }
-.btn.primary:hover { background: #1e293b; }
-.btn.small { font-size: 13px; padding: 8px 12px; border-radius: 8px; }
-.btn.link { border-color: #bfdbfe; background: #eff6ff; color: #1d4ed8; }
-.btn.link:hover { background: #dbeafe; }
-
-.content { max-width: 1280px; margin: 0 auto; width: 100%; padding: 32px; }
-.notice { border: 1px solid #ffe4e6; background: #fff5f5; color: #991b1b; border-radius: 12px; padding: 14px 18px; margin-bottom: 24px; font-size: 14px; display: flex; align-items: center; gap: 10px; }
-.view { display: none; }
-.view.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
-.section { margin-top: 32px; scroll-margin-top: 95px; }
-.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-h2 { font-size: 26px; font-weight: 700; margin: 0; color: #0f172a; }
-h3 { font-size: 18px; font-weight: 600; margin: 0; }
-p.lead { margin: 6px 0 0; color: #64748b; font-size: 15px; }
-.eyebrow { text-transform: uppercase; letter-spacing: .09em; font-size: 11px; color: var(--muted); font-weight: 700; }
-
-.card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-.hero { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 24px; align-items: stretch; }
-.hero-card { padding: 32px; display: flex; flex-direction: column; justify-content: center; }
-.hero h2 { font-size: 36px; line-height: 1.15; margin: 8px 0 16px; letter-spacing: -0.02em; }
-.hero p { color: #475569; margin: 0; font-size: 16px; }
-.meta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.meta-item { padding: 16px; border-radius: 12px; background: #f8fafc; border: 1px solid var(--line); }
-.meta-item span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
-.meta-item strong { display: block; font-size: 15px; margin-top: 6px; color: #0f172a; }
-
-.grid { display: grid; gap: 20px; }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
-.chip { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 16px; font-size: 13px; cursor: pointer; font-weight: 500; color: #475569; }
-.chip:hover { background: #f1f5f9; }
-.chip.active { background: #0f172a; color: #fff; border-color: #0f172a; }
-
-.phase-card { padding: 24px; position: relative; cursor: pointer; background: #fff; }
-.phase-card:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-.phase-card:before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--phase); }
-.phase-card .num { width: 40px; height: 40px; border-radius: 10px; background: color-mix(in srgb, var(--phase) 12%, white); color: var(--phase); font-weight: 700; display: grid; place-items: center; margin-bottom: 16px; font-size: 16px; }
-.phase-card h3 { font-size: 20px; margin-bottom: 8px; color: #0f172a; }
-.phase-card p { margin: 0; color: #475569; font-size: 14px; }
-.phase-card .done { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; font-size: 13px; color: #64748b; font-weight: 500; }
-
-.purple { --phase: var(--purple); }
-.teal { --phase: var(--teal); }
-.green { --phase: var(--green); }
-
-.roadmap-wrap { padding: 24px; }
-.roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.road-col { border: 1px solid var(--line); border-radius: 14px; background: #fff; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.road-col-head { padding: 16px 20px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--phase) 6%, white); }
-.road-col-head h3 { color: var(--phase); font-size: 16px; font-weight: 700; }
-.road-list { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-.road-node { border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 16px; text-align: left; cursor: pointer; position: relative; }
-.road-node:hover, .road-node.active { border-color: var(--phase); box-shadow: 0 0 0 4px color-mix(in srgb, var(--phase) 12%, transparent); }
-.road-node.dim { opacity: .4; }
-.road-node .node-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
-.road-node h4 { font-size: 15px; margin: 0 0 4px; font-weight: 600; color: #0f172a; }
-.road-node p { font-size: 13px; color: #64748b; margin: 0; }
-.node-num { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; background: color-mix(in srgb, var(--phase) 12%, white); color: var(--phase); font-weight: 700; font-size: 13px; flex: 0 0 auto; }
-
-.detail-panel { margin-top: 24px; border: 1px solid #cbd5e1; border-radius: 16px; background: #fff; box-shadow: var(--shadow); overflow: hidden; }
-.detail-panel:before { content: ""; display: block; height: 6px; background: var(--active); }
-.detail-inner { padding: 24px; }
-.detail-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
-.badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-.badge { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: #f8fafc; border-radius: 999px; padding: 6px 12px; font-size: 12px; color: #475569; font-weight: 500; }
-.detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-.mini-steps { margin-top: 20px; display: grid; gap: 12px; }
-.mini-step { display: grid; grid-template-columns: 36px 1fr auto; gap: 16px; align-items: start; border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: #f8fafc; }
-.mini-step .n { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: color-mix(in srgb, var(--active) 12%, white); color: var(--active); font-weight: 700; font-size: 14px; }
-
-.phase-title { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; padding: 28px; border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--phase) 8%, white), #fff); border: 1px solid color-mix(in srgb, var(--phase) 20%, var(--line)); box-shadow: var(--shadow); }
-.phase-title h2 { color: var(--phase); }
-.phase-layout { display: grid; grid-template-columns: 300px 1fr; gap: 24px; margin-top: 24px; }
-.phase-map { position: sticky; top: 92px; align-self: start; padding: 20px; background: #fff; border-radius: 14px; border: 1px solid var(--line); }
-.phase-map h3 { font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
-.phase-map button { width: 100%; text-align: left; margin-bottom: 8px; border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 12px; cursor: pointer; font-size: 14px; font-weight: 500; color: #475569; }
-.phase-map button:hover { background: #f1f5f9; border-color: #cbd5e1; }
-.phase-map button.active { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.55;font-size:15px}button,input,select{font:inherit}a{color:inherit}.hidden{display:none!important}
+.app{display:grid;grid-template-columns:282px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:#fff;border-right:1px solid var(--line);padding:20px 16px}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:20px}.logo{width:42px;height:42px;border-radius:14px;background:#111827;color:#fff;display:grid;place-items:center;font-weight:800}.brand h1{font-size:18px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.nav-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:18px 8px 8px}.nav button,.nav a{width:100%;display:flex;align-items:center;gap:10px;text-decoration:none;color:#334155;padding:10px 12px;border-radius:12px;margin:4px 0;font-size:14px;background:transparent;border:0;text-align:left;cursor:pointer}.nav button:hover,.nav button.active,.nav a:hover{background:#eef2ff;color:#1d4ed8}.dot{width:9px;height:9px;border-radius:999px;background:#94a3b8}.dot.purple{background:var(--purple)}.dot.teal{background:var(--teal)}.dot.green{background:var(--green)}.sidebar-note{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:12px}
+.main{min-width:0}.topbar{position:sticky;top:0;z-index:30;background:rgba(246,247,251,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 28px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.search-wrap{position:relative}.search-wrap:before{content:"⌕";position:absolute;left:14px;top:9px;color:#64748b;font-size:20px}.search-wrap input{width:100%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px 14px 11px 42px;outline:none}.search-wrap input:focus{border-color:#93c5fd;box-shadow:0 0 0 4px #dbeafe}.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 13px;cursor:pointer;color:#334155;text-decoration:none;display:inline-flex;align-items:center;gap:6px;justify-content:center}.btn:hover{background:#f8fafc;text-decoration:none}.btn.primary{background:#111827;color:#fff;border-color:#111827}.btn.small{font-size:13px;padding:7px 10px;border-radius:10px}.btn.link{border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8}
+.content{max-width:1240px;margin:0 auto;padding:28px}.notice{border:1px solid #fed7aa;background:#fff7ed;color:#8a3b0e;border-radius:14px;padding:13px 16px;margin-bottom:22px}
+.view{display:none}.view.active{display:block}.section{margin-top:26px;scroll-margin-top:95px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}h2{font-size:24px;margin:0}h3{margin:0}p.lead{margin:4px 0 0;color:#64748b}.eyebrow{text-transform:uppercase;letter-spacing:.09em;font-size:12px;color:var(--muted);font-weight:700}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.hero{display:grid;grid-template-columns:1.35fr .85fr;gap:18px;align-items:stretch}.hero-card{padding:25px}.hero h2{font-size:34px;line-height:1.12;margin:8px 0 12px}.hero p{color:#475569;margin:0}.meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.meta-item{padding:14px;border-radius:14px;background:#f8fafc;border:1px solid var(--line)}.meta-item span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.meta-item strong{display:block;font-size:14px;margin-top:4px}
+.grid{display:grid;gap:16px}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}.chip-row{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:13px;cursor:pointer}.chip.active{background:#111827;color:#fff;border-color:#111827}
+.phase-card{padding:18px;position:relative;overflow:hidden;cursor:pointer;transition:.15s}.phase-card:hover{transform:translateY(-1px);box-shadow:0 14px 35px rgba(16,24,40,.10)}.phase-card:before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--phase)}.phase-card .num{width:38px;height:38px;border-radius:13px;background:color-mix(in srgb,var(--phase) 14%,white);color:var(--phase);font-weight:800;display:grid;place-items:center;margin-bottom:12px}.phase-card h3{font-size:21px;margin-bottom:8px}.phase-card p{margin:0;color:#475569}.phase-card .done{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;font-size:13px;color:#64748b}
+.purple{--phase:var(--purple)}.teal{--phase:var(--teal)}.green{--phase:var(--green)}
+.roadmap-wrap{padding:18px}.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.road-col{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfcff);overflow:hidden}.road-col-head{padding:14px 16px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--phase) 9%,white)}.road-col-head h3{color:var(--phase);font-size:18px}.road-list{padding:12px;display:flex;flex-direction:column;gap:10px}.road-node{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;text-align:left;cursor:pointer;transition:.15s;position:relative}.road-node:hover,.road-node.active{border-color:var(--phase);box-shadow:0 0 0 3px color-mix(in srgb,var(--phase) 12%,transparent)}.road-node.dim{opacity:.32}.road-node .node-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.road-node h4{font-size:15px;margin:3px 0}.road-node p{font-size:12px;color:#64748b;margin:0}.node-num{width:28px;height:28px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--phase) 14%,white);color:var(--phase);font-weight:800;font-size:12px;flex:0 0 auto}
+.detail-panel{margin-top:16px;border:1px solid color-mix(in srgb,var(--active) 35%,var(--line));border-radius:20px;background:#fff;box-shadow:var(--shadow);overflow:hidden}.detail-panel:before{content:"";display:block;height:5px;background:var(--active)}.detail-inner{padding:18px}.detail-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.badge{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:#f8fafc;border-radius:999px;padding:4px 9px;font-size:12px;color:#475569}.detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mini-steps{margin-top:16px;display:grid;gap:10px}.mini-step{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px;background:#fbfcff}.mini-step .n{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--active) 13%,white);color:var(--active);font-weight:800}
+.phase-title{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:22px;border-radius:22px;background:linear-gradient(135deg,color-mix(in srgb,var(--phase) 14%,white),#fff);border:1px solid color-mix(in srgb,var(--phase) 28%,var(--line));box-shadow:var(--shadow)}.phase-title h2{color:var(--phase)}.phase-layout{display:grid;grid-template-columns:310px 1fr;gap:18px;margin-top:18px}.phase-map{position:sticky;top:92px;align-self:start;padding:14px}.phase-map h3{font-size:15px;margin:0 0 10px}.phase-map button{width:100%;text-align:left;margin-bottom:8px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;cursor:pointer}.phase-map button.active,.phase-map button:hover{border-color:var(--phase);background:color-mix(in srgb,var(--phase) 8%,white)}.phase-content{display:flex;flex-direction:column;gap:16px}.sub-section{padding:18px;scroll-margin-top:100px}.sub-head{display:flex;justify-content:space-between;gap:14px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:12px}.steps{display:grid;gap:12px}.step-card{display:grid;grid-template-columns:34px 1fr;gap:12px;border:1px solid var(--line);border-radius:15px;padding:14px;background:#fff}.step-card.highlight{outline:3px solid color-mix(in srgb,var(--phase) 20%,transparent);border-color:var(--phase)}.step-card.hidden-by-filter{display:none}.check input{width:18px;height:18px;accent-color:#111827}.step-title-row{display:flex;justify-content:space-between;gap:10px}.step-title-row h4{margin:0;font-size:16px}.step-card p{margin:6px 0;color:#475569}.step-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.out{font-size:13px;color:#334155}.outputs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.output{padding:13px;border:1px solid var(--line);border-radius:14px;background:#fff}.output span{display:block;color:#64748b;font-size:13px;margin-top:4px}code{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:2px 6px;font-size:12px;color:#0f172a}.doc-link{color:#1d4ed8;text-decoration:underline;text-underline-offset:3px}
+.simple-table{width:100%;border-collapse:collapse}.simple-table th,.simple-table td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.simple-table th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#64748b;background:#f8fafc}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.tool{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff}.tool p{margin:5px 0 0;color:#64748b;font-size:13px}.empty{display:none;margin-top:18px;text-align:center;color:#64748b;border:1px dashed var(--line);border-radius:16px;padding:22px;background:#fff}.footer{text-align:center;color:#64748b;font-size:12px;margin:30px 0 6px}.quick-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.search-results{display:none;margin-bottom:18px}.search-results.active{display:block}.result-list{display:grid;gap:10px}.result-item{padding:13px;border-radius:14px;border:1px solid var(--line);background:#fff;display:flex;justify-content:space-between;gap:12px;align-items:center}.result-item p{margin:3px 0 0;color:#64748b;font-size:13px}
+@media(max-width:1050px){.hero,.roadmap-grid,.grid-3,.tools{grid-template-columns:1fr}.phase-layout{grid-template-columns:1fr}.phase-map{position:relative;top:auto}.outputs{grid-template-columns:1fr}}
+@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.topbar{grid-template-columns:1fr;padding:12px 16px}.content{padding:18px}.grid-2,.meta-grid{grid-template-columns:1fr}.detail-top,.sub-head,.phase-title{flex-direction:column}.mini-step{grid-template-columns:30px 1fr}.mini-step .btn{grid-column:1/-1}}
+@media print{.sidebar,.topbar,.btn,.chip-row,.phase-map,.notice{display:none!important}.app{display:block}.content{padding:0;max-width:none}.view{display:block!important}.card,.phase-title,.detail-panel{box-shadow:none}}
 </style>
 </head>
 <body>
-
 <div class="app">
-  <!-- Sidebar -->
   <aside class="sidebar">
-    <div class="brand">
-      <div class="logo">W</div>
-      <div>
-        <h1>White Card SOP</h1>
-        <p>Operational Hub v1.0</p>
-      </div>
+    <div class="brand"><div class="logo">WC</div><div><h1>White Card SOP</h1><p>Live roadmap · Internal use</p></div></div>
+    <div class="nav">
+      <div class="nav-title">Pages</div>
+      <button class="nav-btn active" data-view="home"><span class="dot"></span>Main Roadmap</button>
+      <button class="nav-btn" data-view="phase-enrolment"><span class="dot purple"></span>Phase 1 · Enrolment</button>
+      <button class="nav-btn" data-view="phase-processing"><span class="dot teal"></span>Phase 2 · Processing</button>
+      <button class="nav-btn" data-view="phase-submission"><span class="dot green"></span>Phase 3 · Submission</button>
+      <div class="nav-title">Quick reference</div>
+      <button class="nav-btn" data-view="handoffs"><span class="dot"></span>Handoffs & Folder Rules</button>
+      <button class="nav-btn" data-view="documents"><span class="dot"></span>Documents & Templates</button>
     </div>
-    
-    <nav class="nav">
-      <div class="nav-title">Core Navigation</div>
-      <button class="active" onclick="switchView('dashboard')">📊 Dashboard Overview</button>
-      <button onclick="switchView('roadmap')">🗺️ Interactive Roadmap</button>
-      
-      <div class="nav-title">Phases</div>
-      <button onclick="switchView('phase1')"><span class="dot purple"></span> Phase 1: Onboarding</button>
-      <button onclick="switchView('phase2')"><span class="dot teal"></span> Phase 2: Processing</button>
-      <button onclick="switchView('phase3')"><span class="dot green"></span> Phase 3: Issuance</button>
-    </nav>
-    
-    <div class="sidebar-note">
-      <strong>Pro Tip:</strong> Click any phase box or roadmap component to preview deep actions and check operational targets.
-    </div>
+    <div class="sidebar-note">Confidential – Internal Use<br>Use SharePoint/OneDrive links for confidential documents.</div>
   </aside>
-
-  <!-- Main Work Window -->
   <main class="main">
-    <header class="topbar">
-      <div class="search-wrap">
-        <input type="text" placeholder="Search operations, files, or specific steps...">
-      </div>
-      <div class="top-actions">
-        <button class="btn primary" onclick="alert('Exporting data pack...')">📤 Export Pack</button>
-        <button class="btn" onclick="alert('Opening settings panel...')">⚙️ System Config</button>
-      </div>
-    </header>
-
+    <div class="topbar">
+      <div class="search-wrap"><input id="searchInput" type="search" placeholder="Search SOP… try USI, SafeWork, T-24h, trainer, payment"></div>
+      <div class="top-actions"><button class="btn" id="homeBtn">Main</button><button class="btn" id="resetBtn">↺ Reset checklist</button><button class="btn primary" onclick="window.print()">⎙ Print</button></div>
+    </div>
     <div class="content">
-      <div class="notice">
-        <span>⚠️</span> <strong>System Notice:</strong> Ensure all incoming student documents comply directly with ASQA standards prior to triggering step approvals.
-      </div>
-
-      <!-- Dashboard View -->
-      <section id="dashboard" class="view active">
-        <div class="card hero">
-          <div class="hero-card">
-            <span class="eyebrow">Standard Operating Procedure</span>
-            <h2>White Card Workflow Hub</h2>
-            <p>Track, manage, and execute precise operational actions across the entire student onboarding, identity validation, and physical card issuance cycle.</p>
-          </div>
-          <div class="hero-card" style="border-left: 1px solid var(--line); background: #fafafa;">
-            <div class="meta-grid">
-              <div class="meta-item"><span>Target SLA</span><strong>24 Hours</strong></div>
-              <div class="meta-item"><span>Compliance</span><strong>ASQA Checked</strong></div>
-              <div class="meta-item"><span>Core Steps</span><strong>12 Items</strong></div>
-              <div class="meta-item"><span>Risk Profile</span><strong>Low Risk</strong></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <div>
-              <h2>Operational Lifecycle</h2>
-              <p class="lead">Select a primary operational tier below to unpack the nested procedures.</p>
-            </div>
-          </div>
-          
-          <div class="grid grid-3">
-            <div class="card phase-card purple" onclick="switchView('phase1')">
-              <div class="num">01</div>
-              <h3>Student Onboarding</h3>
-              <p>Registration handling, USI verification, and course payment triggers.</p>
-              <div class="done">4 Core Procedures</div>
-            </div>
-            <div class="card phase-card teal" onclick="switchView('phase2')">
-              <div class="num">02</div>
-              <h3>Assessment Processing</h3>
-              <p>Marking assessments, reviewing audio/video evidence, and compliance storage.</p>
-              <div class="done">4 Core Procedures</div>
-            </div>
-            <div class="card phase-card green" onclick="switchView('phase3')">
-              <div class="num">03</div>
-              <h3>Card Issuance</h3>
-              <p>State registry data updates, plastic printing, and distribution logic.</p>
-              <div class="done">4 Core Procedures</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Roadmap View -->
-      <section id="roadmap" class="view">
-        <h2>Interactive SOP Architecture</h2>
-        <p class="lead">Click any individual item node to load dynamic operational guidelines instantly inside the viewport.</p>
-        <!-- The interactive panel scripts and placeholders go here -->
-      </section>
+      <div class="notice"><strong>Confidential – Internal Use.</strong> Do not upload student ID copies or personal student information to this prototype.</div>
+      <div class="search-results card" id="searchResults"><div class="detail-inner"><div class="section-head"><div><h2>Search Results</h2><p class="lead" id="searchCount"></p></div><button class="btn small" id="clearSearch">Clear search</button></div><div class="result-list" id="resultList"></div></div></div>
+      <section class="view active" id="view-home"></section>
+      <section class="view" id="view-phase-enrolment"></section>
+      <section class="view" id="view-phase-processing"></section>
+      <section class="view" id="view-phase-submission"></section>
+      <section class="view" id="view-handoffs"></section>
+      <section class="view" id="view-documents"></section>
+      <div class="empty" id="emptyState">No results found. Try a different keyword or clear the search.</div>
+      <div class="footer">END · White Card SOP Hub · Enrolment → Processing → Submission · Confidential – Internal Use</div>
     </div>
   </main>
 </div>
-
 <script>
-function switchView(viewId) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-  
-  const targetView = document.getElementById(viewId);
-  if(targetView) targetView.classList.add('active');
-  
-  event.currentTarget.classList.add('active');
+const sopData = {
+  "meta": {
+    "title": "White Card SOP Hub",
+    "subtitle": "Live roadmap for Enrolment → Processing → Submission",
+    "version": "Prototype v1.0",
+    "owner": "Maria / Operations Manager",
+    "audience": "RTO Team, Enrolment Team, Operation Team, Trainers, Finance",
+    "review": "Annual, or when process/regulatory requirements change",
+    "confidential": "Confidential – Internal Use"
+  },
+  "phases": [
+    {
+      "id": "enrolment",
+      "number": "1",
+      "name": "Enrolment",
+      "owner": "RTO Team / Enrolment Team",
+      "summary": "Set up the class, confirm the trainer, enrol students, and hand over the final enrolment pack by T-24h.",
+      "done": "Class published, trainer confirmed, students pre-enrolled, reminders sent, /Enrolment folder ready.",
+      "theme": "purple",
+      "outputs": [
+        {
+          "name": "Student List",
+          "file": "StudentList.xlsx",
+          "note": "Final list with payment, ID, USI and LLN flags"
+        },
+        {
+          "name": "SafeWork Notification",
+          "file": "SafeWorkNotification.pdf",
+          "note": "Pre-training notice lodged with SafeWork NSW"
+        },
+        {
+          "name": "Trainer Confirmation",
+          "file": "TrainerConfirmation.docx",
+          "note": "Written confirmation that trainer accepted the class"
+        },
+        {
+          "name": "Pre-filled Enrolment Forms",
+          "file": "PreFilledEnrolmentForms.pdf",
+          "note": "Generated from Hub System at T-24h"
+        }
+      ],
+      "sections": [
+        {
+          "id": "timetable",
+          "title": "Timetable Setup",
+          "short": "Timetable",
+          "timing": "Planning cycle",
+          "owner": "RTO Team",
+          "intro": "This happens before class day. Do not create the class folder until the timetable is locked.",
+          "steps": [
+            {
+              "id": "e1",
+              "title": "Confirm CQ / VTC dates",
+              "owner": "RTO Team",
+              "timing": "Start of planning cycle",
+              "action": "Confirm CQ and VTC short course dates with Yoko by email or Teams.",
+              "system": "Email or Teams",
+              "output": "Confirmed CQ/VTC dates on record",
+              "keywords": "Yoko CQ VTC date timetable"
+            },
+            {
+              "id": "e2",
+              "title": "Confirm TP dates",
+              "owner": "RTO Team",
+              "timing": "Start of planning cycle",
+              "action": "Confirm TP dates with Thai or Alicia by email or Teams.",
+              "system": "Email or Teams",
+              "output": "Confirmed TP dates on record",
+              "keywords": "Thai Alicia TP date timetable"
+            },
+            {
+              "id": "e3",
+              "title": "Create Master Timetable",
+              "owner": "RTO Team",
+              "timing": "After dates confirmed",
+              "action": "Create or update the Master Timetable in Excel, allocate the classroom, and save it to SharePoint with read access for all teams.",
+              "system": "Excel / SharePoint",
+              "output": "Master Timetable updated",
+              "keywords": "Master Timetable Excel SharePoint classroom"
+            },
+            {
+              "id": "e4",
+              "title": "Create class in SMS",
+              "owner": "RTO Team",
+              "timing": "After timetable locked",
+              "action": "Create or update the class in the Student Management System for public booking.",
+              "system": "SMS",
+              "output": "Class is publicly bookable",
+              "keywords": "SMS public booking class create"
+            },
+            {
+              "id": "e5",
+              "title": "Create class in Hub System",
+              "owner": "RTO Team",
+              "timing": "Same as SMS setup",
+              "action": "Create the class in the Hub System for internal or agency booking.",
+              "system": "Hub System",
+              "output": "Class is internally bookable",
+              "keywords": "Hub System internal agency booking"
+            },
+            {
+              "id": "e6",
+              "title": "Create class folder",
+              "owner": "RTO Team",
+              "timing": "Immediately after class setup",
+              "action": "Create WC_[Date]_[Location]_[Trainer] in SharePoint with /Enrolment, /Processing and /Submission subfolders.",
+              "system": "SharePoint",
+              "output": "SharePoint class folder ready",
+              "keywords": "SharePoint folder Enrolment Processing Submission"
+            },
+            {
+              "id": "e7",
+              "title": "Notify team leads",
+              "owner": "RTO Team",
+              "timing": "Immediately after folder is created",
+              "action": "Notify Enrolment, Operation, RTO and Ops Manager that the class folder is ready.",
+              "system": "Email / Teams",
+              "output": "Written notice on record",
+              "keywords": "notify team leads email Teams"
+            },
+            {
+              "id": "e8",
+              "title": "Trainer confirmation",
+              "owner": "RTO Team",
+              "timing": "After class details confirmed",
+              "action": "Forward booking confirmation to assigned trainer with course code, date, time, venue and language.",
+              "system": "Email",
+              "output": "Trainer confirmation saved",
+              "keywords": "trainer confirmation course code venue language"
+            }
+          ]
+        },
+        {
+          "id": "urgent",
+          "title": "Urgent Change Management",
+          "short": "Urgent Change",
+          "timing": "When date / trainer / venue changes",
+          "owner": "RTO Team / Enrolment Team",
+          "intro": "Use this when a published class date, trainer or venue changes. The change is not complete until all systems and all audiences are updated.",
+          "steps": [
+            {
+              "id": "u1",
+              "title": "Issue revised SafeWork notice",
+              "owner": "RTO Team",
+              "timing": "Change confirmed",
+              "action": "Issue revised SafeWork notice to the regulator at least 7 days before delivery where required.",
+              "system": "SafeWork NSW portal",
+              "output": "Revised notice lodged",
+              "keywords": "SafeWork notice regulator revised 7 days"
+            },
+            {
+              "id": "u2",
+              "title": "Notify trainer",
+              "owner": "RTO Team",
+              "timing": "Change confirmed",
+              "action": "Notify trainer in writing about the change.",
+              "system": "Email",
+              "output": "Trainer acknowledgement on record",
+              "keywords": "trainer notify change acknowledgement"
+            },
+            {
+              "id": "u3",
+              "title": "Update systems",
+              "owner": "RTO Team",
+              "timing": "Change confirmed",
+              "action": "Update Master Timetable, SMS and Hub System records.",
+              "system": "Excel / SMS / Hub System",
+              "output": "All systems aligned",
+              "keywords": "Master Timetable SMS Hub System update"
+            },
+            {
+              "id": "u4",
+              "title": "Update website / agency communication",
+              "owner": "RTO Team",
+              "timing": "Change confirmed",
+              "action": "Update public information and confirm wording with Yoko before external agency communication goes out.",
+              "system": "Website / agency communication",
+              "output": "Public information updated",
+              "keywords": "website agency Yoko communication"
+            },
+            {
+              "id": "u5",
+              "title": "Notify public students",
+              "owner": "RTO Team",
+              "timing": "Change confirmed",
+              "action": "Notify enrolled public students by email and SMS.",
+              "system": "Email / SMS",
+              "output": "Student notification on record",
+              "keywords": "public students email SMS"
+            },
+            {
+              "id": "u6",
+              "title": "Notify internal students",
+              "owner": "Enrolment Team",
+              "timing": "Change confirmed",
+              "action": "Notify internal booking students by email and SMS.",
+              "system": "Email / SMS",
+              "output": "Student notification on record",
+              "keywords": "internal students email SMS"
+            },
+            {
+              "id": "u7",
+              "title": "Log the change",
+              "owner": "RTO Team",
+              "timing": "After notifications",
+              "action": "Log the change in the Escalation / Change Register in the class folder.",
+              "system": "T04 Escalation Register",
+              "output": "Audit trail created",
+              "keywords": "change register escalation audit trail"
+            }
+          ]
+        },
+        {
+          "id": "student-enrolment",
+          "title": "Student Enrolment",
+          "short": "Student Enrolment",
+          "timing": "Class publish to T-24h",
+          "owner": "Enrolment Team / RTO Team",
+          "intro": "The enrolment is not confirmed until required student details and checks are complete.",
+          "steps": [
+            {
+              "id": "s1",
+              "title": "Collect required student details",
+              "owner": "Enrolment Team",
+              "timing": "Before confirming enrolment",
+              "action": "Collect full legal name, DOB, mobile/email, verified USI, payment status, LLN/accessibility needs and clear current photo ID copy.",
+              "system": "SMS / Hub System",
+              "output": "Student ready to add to list",
+              "keywords": "USI LLN photo ID payment DOB contact"
+            },
+            {
+              "id": "s2",
+              "title": "Send enrolment confirmation",
+              "owner": "Enrolment Team / RTO Team",
+              "timing": "Immediately after confirmation",
+              "action": "Send confirmation by email and SMS. Enrolment Team handles internal students; RTO Team handles public students.",
+              "system": "Email / SMS",
+              "output": "Confirmation record saved",
+              "keywords": "student confirmation email SMS public internal"
+            },
+            {
+              "id": "s3",
+              "title": "Send 48-hour reminder",
+              "owner": "Enrolment Team / RTO Team",
+              "timing": "T-48h before class",
+              "action": "Send reminder by email and SMS where used.",
+              "system": "Email / SMS",
+              "output": "Reminder record saved",
+              "keywords": "48 hour reminder T-48h"
+            },
+            {
+              "id": "s4",
+              "title": "Run pre-filled enrolment report",
+              "owner": "Enrolment Team",
+              "timing": "T-24h",
+              "action": "Generate pre-filled enrolment forms from Hub System for every confirmed student.",
+              "system": "Hub System",
+              "output": "PDF generated",
+              "keywords": "pre-filled enrolment form Hub System T-24h"
+            },
+            {
+              "id": "s5",
+              "title": "Print and save forms",
+              "owner": "Enrolment Team",
+              "timing": "T-24h",
+              "action": "Print one hard copy per student and save the soft copy to /Enrolment.",
+              "system": "SharePoint / Printer",
+              "output": "Printed forms and PDF saved",
+              "keywords": "print forms Enrolment PreFilledEnrolmentForms"
+            },
+            {
+              "id": "s6",
+              "title": "Notify Operation Team",
+              "owner": "Enrolment Team",
+              "timing": "T-24h, by 4pm",
+              "action": "Notify Operation Team Lead that forms are ready and Phase 1 handover is complete.",
+              "system": "Teams / Email",
+              "output": "Handover signal sent",
+              "keywords": "handover Operation Team T-24h 4pm"
+            }
+          ]
+        }
+      ],
+      "escalations": [
+        {
+          "trigger": "Yoko, Thai or Alicia have not confirmed dates within 24h.",
+          "to": "Backup approver, then Ops Manager (L3)",
+          "time": "Within 48h of original request"
+        },
+        {
+          "trigger": "Minimum class size not reached at T-48h.",
+          "to": "Ops Manager (L3)",
+          "time": "Same day"
+        },
+        {
+          "trigger": "USI verification failure at pre-enrolment.",
+          "to": "Enrolment Team Lead (L2)",
+          "time": "Immediate"
+        },
+        {
+          "trigger": "Late enrolment request past T-24h cut-off.",
+          "to": "Enrolment Team Lead (L2)",
+          "time": "Immediate"
+        },
+        {
+          "trigger": "SafeWork pre-training notice missed or rejected.",
+          "to": "Ops Manager (L3); RTO Manager (L4) if unresolved",
+          "time": "Same day"
+        },
+        {
+          "trigger": "Privacy concern with student ID copy.",
+          "to": "RTO Manager (L4)",
+          "time": "Immediate"
+        }
+      ]
+    },
+    {
+      "id": "processing",
+      "number": "2",
+      "name": "Processing",
+      "owner": "Operation Team",
+      "summary": "Prepare class materials, check students in, support training delivery, collect and scan completed document packs.",
+      "done": "Training delivered; all completed documents scanned and uploaded to /Processing; RTO Team notified.",
+      "theme": "teal",
+      "outputs": [
+        {
+          "name": "Per-student document pack",
+          "file": "[Firstname]_[LASTNAME].pdf",
+          "note": "One combined PDF or per-document files"
+        },
+        {
+          "name": "Day-of-Training Check-In + Attendance Sheet",
+          "file": "Day_of_Training_Check_In_&_Attendance_Sheet.docx",
+          "note": "Signed by trainer and Operation Team"
+        },
+        {
+          "name": "Equipment & Resources Checklist",
+          "file": "Equipment_Resources_Checklist.docx",
+          "note": "Signed at T-1 day"
+        },
+        {
+          "name": "End-of-Class Document Pack Checklist",
+          "file": "End_of_Class_Document_Pack_Checklist.docx",
+          "note": "One row per student, co-signed"
+        },
+        {
+          "name": "Incident / Near-Miss Form",
+          "file": "Incident_Near_Miss_Form.docx",
+          "note": "Only if an incident occurred"
+        }
+      ],
+      "sections": [
+        {
+          "id": "pre-class",
+          "title": "Pre-Class Preparation",
+          "short": "Pre-Class",
+          "owner": "Operation Team",
+          "timing": "T-24h to T-Day",
+          "intro": "Confirm handover and prepare everything before class day.",
+          "steps": [
+            {
+              "id": "p1",
+              "title": "Confirm Phase 1 handover",
+              "owner": "Operation Team",
+              "timing": "T-24h on receipt",
+              "action": "Open /Enrolment and verify StudentList.xlsx, SafeWorkNotification.pdf, TrainerConfirmation.docx and PreFilledEnrolmentForms.pdf are present.",
+              "system": "SharePoint /Enrolment",
+              "output": "Handover confirmed",
+              "keywords": "StudentList SafeWorkNotification TrainerConfirmation PreFilledEnrolmentForms"
+            },
+            {
+              "id": "p2",
+              "title": "Print pre-filled forms",
+              "owner": "Operation Team",
+              "timing": "T-24h to T-Day",
+              "action": "Print one pre-filled enrolment form per student if printed copies were not received.",
+              "system": "Printer / Hub report",
+              "output": "Hard copies ready for trainer",
+              "keywords": "print pre-filled forms"
+            },
+            {
+              "id": "p3",
+              "title": "Run equipment checklist",
+              "owner": "Operation Team",
+              "timing": "T-24h to T-Day",
+              "action": "Check trainer materials, learner workbooks, PPE samples, IT/projector, sign-in sheet and first-aid kit. Sign and date checklist.",
+              "system": "T08 Equipment Checklist",
+              "output": "Signed checklist saved to /Processing",
+              "keywords": "equipment resources PPE IT projector first-aid"
+            }
+          ]
+        },
+        {
+          "id": "check-in",
+          "title": "Day-of-Training Check-In",
+          "short": "Check-In",
+          "owner": "Operation Team",
+          "timing": "Class day",
+          "intro": "Student check-in is the gate to class. Check ID, payment, USI and attendance before the session starts.",
+          "steps": [
+            {
+              "id": "c1",
+              "title": "Set up sign-in station",
+              "owner": "Operation Team",
+              "timing": "30 min before start",
+              "action": "Set up check-in sheet, pre-filled forms, pens and ID-check guide.",
+              "system": "T07 Check-In Sheet",
+              "output": "Station ready",
+              "keywords": "sign-in station check-in sheet"
+            },
+            {
+              "id": "c2",
+              "title": "Verify photo ID",
+              "owner": "Operation Team",
+              "timing": "On arrival",
+              "action": "Check photo ID matches the name on the pre-filled enrolment form.",
+              "system": "Photo ID / enrolment form",
+              "output": "ID verified on form",
+              "keywords": "photo ID verify name"
+            },
+            {
+              "id": "c3",
+              "title": "Check payment",
+              "owner": "Operation Team",
+              "timing": "On arrival",
+              "action": "Verify payment status against Student List. If unpaid, offer on-site payment; if still unpaid, escalate before class starts.",
+              "system": "Student List / payment record",
+              "output": "Payment confirmed",
+              "keywords": "payment unpaid tap-and-go Finance"
+            },
+            {
+              "id": "c4",
+              "title": "Confirm USI",
+              "owner": "Operation Team",
+              "timing": "On arrival",
+              "action": "Confirm USI on the form. If missing or mismatched, do on-the-spot lookup. If unresolved, student may attend but certificate is held.",
+              "system": "USI lookup / SMS",
+              "output": "USI confirmed or flagged",
+              "keywords": "USI mismatch lookup certificate held"
+            },
+            {
+              "id": "c5",
+              "title": "Collect signatures",
+              "owner": "Operation Team",
+              "timing": "On arrival",
+              "action": "Student signs pre-filled enrolment form and Attendance Sheet. Correct any pre-filled data if needed.",
+              "system": "Enrolment form / Attendance Sheet",
+              "output": "Signed forms",
+              "keywords": "signature attendance enrolment form"
+            },
+            {
+              "id": "c6",
+              "title": "Final room check",
+              "owner": "Operation Team",
+              "timing": "T-15 min",
+              "action": "Complete final equipment and resource check 15 minutes before class starts.",
+              "system": "Room / equipment",
+              "output": "Room ready",
+              "keywords": "T-15 room ready"
+            },
+            {
+              "id": "c7",
+              "title": "Apply late cut-off",
+              "owner": "Operation Team",
+              "timing": "T+15 min",
+              "action": "Students arriving more than 15 minutes after class start are recorded as NYC and must reschedule.",
+              "system": "Attendance Sheet",
+              "output": "Late list if any",
+              "keywords": "late cut-off 15 minutes NYC reschedule"
+            }
+          ]
+        },
+        {
+          "id": "training",
+          "title": "Training Delivery",
+          "short": "Training",
+          "owner": "Trainer / Operation Team",
+          "timing": "During class",
+          "intro": "Trainer delivers and assesses. Operation Team supports logistics and records events.",
+          "steps": [
+            {
+              "id": "t1",
+              "title": "Deliver training and assessment",
+              "owner": "Trainer",
+              "timing": "During class",
+              "action": "Trainer delivers the session per approved learning plan and completes assessments on the day.",
+              "system": "Learning plan / assessment tools",
+              "output": "Outcome recorded per student",
+              "keywords": "trainer assessment competent NYC"
+            },
+            {
+              "id": "t2",
+              "title": "Monitor attendance",
+              "owner": "Operation Team",
+              "timing": "During class",
+              "action": "Monitor attendance, manage late arrivals/no-shows and support trainer logistics.",
+              "system": "Attendance Sheet",
+              "output": "Attendance kept current",
+              "keywords": "attendance no-shows logistics"
+            },
+            {
+              "id": "t3",
+              "title": "Log incidents",
+              "owner": "Operation Team",
+              "timing": "On occurrence",
+              "action": "Log any incident or near-miss immediately and notify L2 same day.",
+              "system": "T10 Incident Form",
+              "output": "Incident form completed",
+              "keywords": "incident near-miss L2"
+            },
+            {
+              "id": "t4",
+              "title": "Handle misconduct",
+              "owner": "Trainer / Operation Team",
+              "timing": "On occurrence",
+              "action": "Trainer may remove disruptive student. Operation Team logs and informs RTO Team Lead.",
+              "system": "Behaviour incident record",
+              "output": "Behaviour incident logged",
+              "keywords": "misconduct disruptive student"
+            },
+            {
+              "id": "t5",
+              "title": "Protect ID copies",
+              "owner": "Operation Team",
+              "timing": "Throughout day",
+              "action": "Keep ID copies in one locked location and do not leave them visible on the sign-in desk.",
+              "system": "Privacy procedure",
+              "output": "Privacy maintained",
+              "keywords": "privacy ID copies locked location"
+            }
+          ]
+        },
+        {
+          "id": "scan",
+          "title": "Document Collection & Scan",
+          "short": "Collect & Scan",
+          "owner": "Operation Team",
+          "timing": "End of class / same day",
+          "intro": "Collect complete packs before trainer or students leave. Scan and upload same day or by 10am next business day.",
+          "steps": [
+            {
+              "id": "d1",
+              "title": "Run document checklist",
+              "owner": "Operation Team + Trainer",
+              "timing": "End of class",
+              "action": "Run End-of-Class Document Pack Checklist, one row per student. Trainer and Operation Team co-sign.",
+              "system": "T09 Checklist",
+              "output": "Signed checklist",
+              "keywords": "document pack checklist co-sign"
+            },
+            {
+              "id": "d2",
+              "title": "Fix incomplete packs before people leave",
+              "owner": "Operation Team",
+              "timing": "End of class",
+              "action": "If a pack is incomplete, collect the missing item or escalate before student/trainer leaves.",
+              "system": "T09 Checklist",
+              "output": "All packs complete",
+              "keywords": "incomplete pack missing item escalate"
+            },
+            {
+              "id": "d3",
+              "title": "Scan each student pack",
+              "owner": "Operation Team",
+              "timing": "Same day",
+              "action": "Scan each student pack to PDF. Recommended name: [Firstname]_[LASTNAME].pdf.",
+              "system": "Scanner / SharePoint",
+              "output": "Scanned packs",
+              "keywords": "scan PDF firstname lastname"
+            },
+            {
+              "id": "d4",
+              "title": "Quality check scan",
+              "owner": "Operation Team",
+              "timing": "Same day",
+              "action": "Check page count and legibility. Use second-pair-of-eyes review if unclear.",
+              "system": "Scanned PDF",
+              "output": "QA confirmed",
+              "keywords": "page count legibility QA"
+            },
+            {
+              "id": "d5",
+              "title": "Upload to /Processing",
+              "owner": "Operation Team",
+              "timing": "Same day or by 10am next business day",
+              "action": "Upload student packs, check-in sheet, equipment checklist, end-of-class checklist and incident forms to /Processing.",
+              "system": "SharePoint /Processing",
+              "output": "Documents on SharePoint",
+              "keywords": "upload Processing folder SharePoint"
+            },
+            {
+              "id": "d6",
+              "title": "Notify RTO Team",
+              "owner": "Operation Team",
+              "timing": "On upload",
+              "action": "Notify RTO Team Lead that Phase 2 handover is complete.",
+              "system": "Teams / Email",
+              "output": "Handover signal sent",
+              "keywords": "handover RTO Team Phase 2"
+            }
+          ]
+        }
+      ],
+      "escalations": [
+        {
+          "trigger": "Trainer no-show or last-minute cancellation.",
+          "to": "L2 immediately; L3 if no replacement within 1 hour",
+          "time": "Immediate"
+        },
+        {
+          "trigger": "Student arrives without acceptable photo ID.",
+          "to": "Operation Team Lead (L2)",
+          "time": "Immediate — do not check in"
+        },
+        {
+          "trigger": "Student has unpaid balance and refuses to pay.",
+          "to": "Finance + Ops Manager (L3)",
+          "time": "Before class starts"
+        },
+        {
+          "trigger": "USI mismatch cannot be resolved on the spot.",
+          "to": "Operation Team Lead (L2); certificate held",
+          "time": "Immediate"
+        },
+        {
+          "trigger": "Document pack incomplete and student has left venue.",
+          "to": "Operation Team Lead (L2)",
+          "time": "Same day"
+        },
+        {
+          "trigger": "Privacy concern with ID copies during the day.",
+          "to": "RTO Manager (L4)",
+          "time": "Immediate"
+        }
+      ]
+    },
+    {
+      "id": "submission",
+      "number": "3",
+      "name": "Submission",
+      "owner": "RTO Team / Finance",
+      "summary": "Review documents, lodge SafeWork and AVETMISS, reconcile payments, issue certificates and close the class.",
+      "done": "SafeWork lodged, AVETMISS uploaded, finance reconciled, certificates issued, class folder locked.",
+      "theme": "green",
+      "outputs": [
+        {
+          "name": "SafeWork Lodgment Receipt",
+          "file": "SafeWorkLodgement.pdf",
+          "note": "Shows student count and trainer"
+        },
+        {
+          "name": "AVETMISS Upload QA Checklist",
+          "file": "AVETMISS_Upload_QA_Checklist.docx",
+          "note": "Validated at upload"
+        },
+        {
+          "name": "Financial Reconciliation Summary",
+          "file": "FinancialReconciliation.xlsx",
+          "note": "Per-student payment status + trainer pay record"
+        },
+        {
+          "name": "Certificate Register",
+          "file": "CertificateRegister.xlsx",
+          "note": "Issue date, delivery method, tracking if posted"
+        },
+        {
+          "name": "Class Closure Report",
+          "file": "ClassClosureReport.docx",
+          "note": "1-page signed-off summary"
+        }
+      ],
+      "sections": [
+        {
+          "id": "qa",
+          "title": "Document Review & QA",
+          "short": "Document QA",
+          "owner": "RTO Team",
+          "timing": "Same day / 1 business day",
+          "intro": "This is the gate before external lodgment. Missing or unclear documents go back to Operation Team.",
+          "steps": [
+            {
+              "id": "q1",
+              "title": "Verify /Processing folder",
+              "owner": "RTO Team",
+              "timing": "Same day as Phase 2 handover",
+              "action": "Open /Processing and verify one pack per student plus check-in sheet, equipment checklist, document checklist and incident forms if any.",
+              "system": "SharePoint /Processing",
+              "output": "Folder verified",
+              "keywords": "Processing folder verify checklist incident forms"
+            },
+            {
+              "id": "q2",
+              "title": "Check each student pack",
+              "owner": "RTO Team",
+              "timing": "Within 1 business day",
+              "action": "Check ID, signed Enrolment Form, SOT, EOI, Assessment and Attendance Sheet are present and legible.",
+              "system": "Student pack",
+              "output": "QA pass/fail recorded",
+              "keywords": "ID Enrolment SOT EOI Assessment Attendance legible"
+            },
+            {
+              "id": "q3",
+              "title": "Return failed packs",
+              "owner": "RTO Team",
+              "timing": "On detection",
+              "action": "Return failed packs to Operation Team for rectification and pause student lodgment until resolved.",
+              "system": "Issue log / Teams",
+              "output": "Issue logged and tracked",
+              "keywords": "failed QA rectify pause lodgment"
+            },
+            {
+              "id": "q4",
+              "title": "Check outcomes",
+              "owner": "RTO Team",
+              "timing": "Within 1 business day",
+              "action": "Cross-check Trainer Summary / Outcome List. Every student must have Competent or NYC recorded.",
+              "system": "Trainer Summary / Outcome List",
+              "output": "Outcome confirmed per student",
+              "keywords": "Competent NYC outcome Trainer Summary"
+            },
+            {
+              "id": "q5",
+              "title": "Prepare lodgment-ready list",
+              "owner": "RTO Team",
+              "timing": "Within 1 business day",
+              "action": "Only QA-passed students proceed to SafeWork and AVETMISS lodgment.",
+              "system": "SMS / QA checklist",
+              "output": "Lodgment-ready list",
+              "keywords": "QA passed lodgment ready"
+            }
+          ]
+        },
+        {
+          "id": "lodgment",
+          "title": "SafeWork + AVETMISS Lodgment",
+          "short": "Lodgment",
+          "owner": "RTO Team",
+          "timing": "After QA pass",
+          "intro": "Both lodgments have regulatory deadlines. The class is not closed until both are confirmed.",
+          "steps": [
+            {
+              "id": "l1",
+              "title": "Prepare SafeWork payload",
+              "owner": "RTO Team",
+              "timing": "After QA pass",
+              "action": "Prepare post-training lodgment payload with student list, trainer, date and competent outcomes.",
+              "system": "SafeWork NSW portal",
+              "output": "Payload ready",
+              "keywords": "SafeWork payload competent outcomes"
+            },
+            {
+              "id": "l2",
+              "title": "Lodge SafeWork",
+              "owner": "RTO Team",
+              "timing": "Within 7 days; target next business day",
+              "action": "Lodge through the SafeWork NSW portal.",
+              "system": "SafeWork NSW portal",
+              "output": "Lodged",
+              "keywords": "SafeWork lodgment 7 days next business day"
+            },
+            {
+              "id": "l3",
+              "title": "Save SafeWork receipt",
+              "owner": "RTO Team",
+              "timing": "On confirmation",
+              "action": "Save lodgment receipt showing student count and trainer to /Submission as SafeWorkLodgement.pdf.",
+              "system": "SharePoint /Submission",
+              "output": "Receipt on file",
+              "keywords": "SafeWorkLodgement.pdf receipt Submission"
+            },
+            {
+              "id": "l4",
+              "title": "Update SafeWork tracker",
+              "owner": "RTO Team",
+              "timing": "Same day",
+              "action": "Update T03 SafeWork Lodgment Tracker.",
+              "system": "T03 Tracker",
+              "output": "Tracker updated",
+              "keywords": "SafeWork tracker T03"
+            },
+            {
+              "id": "l5",
+              "title": "Prepare AVETMISS upload",
+              "owner": "RTO Team",
+              "timing": "After QA pass",
+              "action": "Prepare enrolment, training activity and outcome data from SMS.",
+              "system": "SMS / AVETMISS",
+              "output": "Upload prepared",
+              "keywords": "AVETMISS SMS enrolment training activity outcome"
+            },
+            {
+              "id": "l6",
+              "title": "Run AVETMISS QA",
+              "owner": "RTO Team",
+              "timing": "Before upload",
+              "action": "Validate fields using T12 before upload, not just at quarterly report.",
+              "system": "T12 AVETMISS QA Checklist",
+              "output": "QA pass",
+              "keywords": "AVETMISS QA T12 NCVER"
+            },
+            {
+              "id": "l7",
+              "title": "Upload AVETMISS data",
+              "owner": "RTO Team",
+              "timing": "Same as SafeWork lodgment",
+              "action": "Upload to SMS and mark records ready for NCVER reporting.",
+              "system": "SMS / NCVER reporting",
+              "output": "Uploaded",
+              "keywords": "NCVER reporting AVETMISS upload"
+            },
+            {
+              "id": "l8",
+              "title": "Save AVETMISS checklist",
+              "owner": "RTO Team",
+              "timing": "On upload",
+              "action": "Save AVETMISS Upload QA Checklist to /Submission.",
+              "system": "SharePoint /Submission",
+              "output": "Checklist on file",
+              "keywords": "AVETMISS_Upload_QA_Checklist Submission"
+            }
+          ]
+        },
+        {
+          "id": "finance",
+          "title": "Financial Reconciliation",
+          "short": "Finance",
+          "owner": "Finance / RTO Team",
+          "timing": "After QA pass",
+          "intro": "Certificate release is held until payment is cleared or referred.",
+          "steps": [
+            {
+              "id": "f1",
+              "title": "Reconcile student payment",
+              "owner": "Finance",
+              "timing": "After QA pass",
+              "action": "Reconcile each student's payment status against SMS and flag outstanding balances.",
+              "system": "Finance system / SMS",
+              "output": "Per-student payment status",
+              "keywords": "payment reconciliation outstanding SMS"
+            },
+            {
+              "id": "f2",
+              "title": "Chase unpaid students",
+              "owner": "Finance",
+              "timing": "D+3, D+7, D+14",
+              "action": "Follow chase cycle. Certificate is held until paid or referred per write-off policy.",
+              "system": "Finance system",
+              "output": "Payment cleared or referred",
+              "keywords": "unpaid D+3 D+7 D+14 certificate held"
+            },
+            {
+              "id": "f3",
+              "title": "Record trainer pay",
+              "owner": "Finance",
+              "timing": "Within 2 business days",
+              "action": "Record trainer class delivery against trainer pay schedule for next pay run.",
+              "system": "Finance system",
+              "output": "Trainer pay queued",
+              "keywords": "trainer payment pay run"
+            },
+            {
+              "id": "f4",
+              "title": "Resolve trainer pay dispute",
+              "owner": "Finance",
+              "timing": "On dispute",
+              "action": "Reconcile against trainer-signed class delivery confirmation.",
+              "system": "Trainer confirmation / finance record",
+              "output": "Resolution recorded",
+              "keywords": "trainer pay dispute"
+            }
+          ]
+        },
+        {
+          "id": "completion",
+          "title": "Certificate Issue & Class Closure",
+          "short": "Completion",
+          "owner": "RTO Team",
+          "timing": "After QA/lodgment/payment",
+          "intro": "Issue certificates only when document QA, SafeWork, AVETMISS and payment checks have passed.",
+          "steps": [
+            {
+              "id": "x1",
+              "title": "Generate Statement of Attainment",
+              "owner": "RTO Team",
+              "timing": "After reconciliation",
+              "action": "Generate Statement of Attainment for every QA-passed, paid student.",
+              "system": "SMS / certificate system",
+              "output": "Certificate ready",
+              "keywords": "Statement of Attainment certificate paid QA"
+            },
+            {
+              "id": "x2",
+              "title": "Send soft copy",
+              "owner": "RTO Team",
+              "timing": "Within 7 business days",
+              "action": "Send soft copy by email to the student.",
+              "system": "Email",
+              "output": "Soft copy delivered",
+              "keywords": "email soft copy 7 business days"
+            },
+            {
+              "id": "x3",
+              "title": "Manage NYC / reissue cases",
+              "owner": "RTO Team",
+              "timing": "On QA or request",
+              "action": "Trigger reassessment SOP for NYC students. Use reissue process for lost, damaged or mis-spelled certificates.",
+              "system": "T05 Reissue / Amendment Register",
+              "output": "Reassessment or reissue tracked",
+              "keywords": "NYC reassessment reissue amendment"
+            },
+            {
+              "id": "x4",
+              "title": "Confirm /Submission folder",
+              "owner": "RTO Team",
+              "timing": "On completion",
+              "action": "Confirm /Submission has SafeWorkLodgement.pdf, AVETMISS QA Checklist and financial reconciliation summary.",
+              "system": "SharePoint /Submission",
+              "output": "Folder complete",
+              "keywords": "Submission folder SafeWorkLodgement AVETMISS financial"
+            },
+            {
+              "id": "x5",
+              "title": "Prepare Class Closure Report",
+              "owner": "RTO Team",
+              "timing": "Within 3 business days",
+              "action": "Prepare one-page summary of class, outcomes, lodgments, finance and incidents. Save and email to Ops Manager.",
+              "system": "T11 Class Closure Report",
+              "output": "Report saved and emailed",
+              "keywords": "Class Closure Report Ops Manager"
+            },
+            {
+              "id": "x6",
+              "title": "Lock class folder",
+              "owner": "RTO Team",
+              "timing": "On closure",
+              "action": "Lock the class folder from further edits. Future amendments follow amendment process.",
+              "system": "SharePoint",
+              "output": "Folder locked",
+              "keywords": "lock folder retention amendment"
+            }
+          ]
+        }
+      ],
+      "escalations": [
+        {
+          "trigger": "SafeWork post-training lodgment at risk of missing 7-day deadline.",
+          "to": "Ops Manager (L3)",
+          "time": "When risk is visible"
+        },
+        {
+          "trigger": "AVETMISS upload validation errors cannot be resolved.",
+          "to": "Ops Manager (L3); RTO Manager (L4)",
+          "time": "Same business day"
+        },
+        {
+          "trigger": "Document discrepancy discovered after lodgment.",
+          "to": "RTO Manager (L4); log amendment",
+          "time": "Same business day"
+        },
+        {
+          "trigger": "Student payment outstanding beyond D+14.",
+          "to": "Finance + Ops Manager (L3)",
+          "time": "End of D+14"
+        },
+        {
+          "trigger": "Privacy breach in soft-copy delivery.",
+          "to": "RTO Manager (L4)",
+          "time": "Immediate"
+        },
+        {
+          "trigger": "Backup / restore failure of records.",
+          "to": "Ops Manager (L3); RTO Manager (L4)",
+          "time": "Immediate"
+        }
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "from": "RTO",
+      "to": "All teams",
+      "trigger": "Class confirmed",
+      "action": "Class folder created with /Enrolment, /Processing and /Submission",
+      "sla": "Same day class is confirmed"
+    },
+    {
+      "from": "Enrolment",
+      "to": "Processing",
+      "trigger": "T-24h before class",
+      "action": "Student List, SafeWork Notification, Trainer Confirmation and Pre-filled Forms visible in /Enrolment",
+      "sla": "By 4pm the day before class"
+    },
+    {
+      "from": "Processing",
+      "to": "Submission",
+      "trigger": "End of training day",
+      "action": "Completed student docs, check-in sheet, equipment checklist, document pack checklist and incident forms uploaded to /Processing",
+      "sla": "Same day, or by 10am next business day"
+    },
+    {
+      "from": "Submission",
+      "to": "Audit / Compliance",
+      "trigger": "After lodgment",
+      "action": "SafeWork Lodgment Receipt and AVETMISS QA Checklist filed in /Submission",
+      "sla": "End of next business day after class"
+    },
+    {
+      "from": "Submission",
+      "to": "Student",
+      "trigger": "Lodgment and QA complete",
+      "action": "Statement of Attainment sent by email; hard copy sent where applicable",
+      "sla": "Soft copy within 7 business days"
+    },
+    {
+      "from": "Submission",
+      "to": "Operations Manager",
+      "trigger": "After every class",
+      "action": "Class Closure Report saved and emailed",
+      "sla": "Within 3 business days of class"
+    }
+  ],
+  "folderRules": [
+    {
+      "folder": "/Enrolment",
+      "owner": "Enrolment Team",
+      "contents": "StudentList.xlsx, SafeWorkNotification.pdf, TrainerConfirmation.docx, PreFilledEnrolmentForms.pdf"
+    },
+    {
+      "folder": "/Processing",
+      "owner": "Operation Team",
+      "contents": "Per-student packs, Training Check-In Sheet, Equipment Checklist, End-of-Class Checklist, Incident Form if any"
+    },
+    {
+      "folder": "/Submission",
+      "owner": "RTO Team",
+      "contents": "SafeWorkLodgement.pdf, AVETMISS Upload QA Checklist, Financial Reconciliation, Certificate Register, Class Closure Report"
+    }
+  ],
+  "tools": [
+    {
+      "name": "SMS",
+      "use": "Public booking, enrolment status, payment status, USI and outcomes"
+    },
+    {
+      "name": "Hub System",
+      "use": "Internal/agency booking and pre-filled enrolment form generation"
+    },
+    {
+      "name": "SharePoint Class Folder",
+      "use": "Single source of truth for compliance evidence"
+    },
+    {
+      "name": "SafeWork NSW portal",
+      "use": "Pre-training notification and post-training lodgment"
+    },
+    {
+      "name": "T01 Student List",
+      "use": "Final class list with payment, ID, USI and LLN flags"
+    },
+    {
+      "name": "T03 SafeWork Lodgment Tracker",
+      "use": "Track lodgment status per class"
+    },
+    {
+      "name": "T04 Escalation Register",
+      "use": "Log L2+ escalations"
+    },
+    {
+      "name": "T07 Day-of-Training Check-In Sheet",
+      "use": "Check-in and attendance record"
+    },
+    {
+      "name": "T08 Equipment Resources Checklist",
+      "use": "Pre-class equipment check"
+    },
+    {
+      "name": "T09 End-of-Class Document Pack Checklist",
+      "use": "Complete document pack sign-off"
+    },
+    {
+      "name": "T10 Incident / Near-Miss Form",
+      "use": "Record incidents and near-misses"
+    },
+    {
+      "name": "T11 Class Closure Report",
+      "use": "1-page closure summary"
+    },
+    {
+      "name": "T12 AVETMISS Upload QA Checklist",
+      "use": "Validate AVETMISS fields at upload"
+    }
+  ],
+  "terms": [
+    {
+      "term": "USI",
+      "meaning": "Unique Student Identifier. Required for VET students."
+    },
+    {
+      "term": "LLN",
+      "meaning": "Language, Literacy and Numeracy screening."
+    },
+    {
+      "term": "SMS",
+      "meaning": "Student Management System."
+    },
+    {
+      "term": "AVETMISS",
+      "meaning": "National VET data reporting standard."
+    },
+    {
+      "term": "NCVER",
+      "meaning": "National Centre for Vocational Education Research."
+    },
+    {
+      "term": "NYC",
+      "meaning": "Not Yet Competent."
+    },
+    {
+      "term": "SoA",
+      "meaning": "Statement of Attainment."
+    }
+  ],
+  "roadmap": [
+    {
+      "phaseId": "enrolment",
+      "phaseName": "Enrolment",
+      "phaseNumber": "1",
+      "sectionId": "timetable",
+      "sectionTitle": "Timetable Setup",
+      "short": "Timetable",
+      "owner": "RTO Team",
+      "timing": "Planning cycle",
+      "theme": "purple",
+      "title": "Timetable Setup",
+      "intro": "This happens before class day. Do not create the class folder until the timetable is locked.",
+      "stepCount": 8
+    },
+    {
+      "phaseId": "enrolment",
+      "phaseName": "Enrolment",
+      "phaseNumber": "1",
+      "sectionId": "urgent",
+      "sectionTitle": "Urgent Change Management",
+      "short": "Urgent Change",
+      "owner": "RTO Team / Enrolment Team",
+      "timing": "When date / trainer / venue changes",
+      "theme": "purple",
+      "title": "Urgent Change Management",
+      "intro": "Use this when a published class date, trainer or venue changes. The change is not complete until all systems and all audiences are updated.",
+      "stepCount": 7
+    },
+    {
+      "phaseId": "enrolment",
+      "phaseName": "Enrolment",
+      "phaseNumber": "1",
+      "sectionId": "student-enrolment",
+      "sectionTitle": "Student Enrolment",
+      "short": "Student Enrolment",
+      "owner": "Enrolment Team / RTO Team",
+      "timing": "Class publish to T-24h",
+      "theme": "purple",
+      "title": "Student Enrolment",
+      "intro": "The enrolment is not confirmed until required student details and checks are complete.",
+      "stepCount": 6
+    },
+    {
+      "phaseId": "processing",
+      "phaseName": "Processing",
+      "phaseNumber": "2",
+      "sectionId": "pre-class",
+      "sectionTitle": "Pre-Class Preparation",
+      "short": "Pre-Class",
+      "owner": "Operation Team",
+      "timing": "T-24h to T-Day",
+      "theme": "teal",
+      "title": "Pre-Class Preparation",
+      "intro": "Confirm handover and prepare everything before class day.",
+      "stepCount": 3
+    },
+    {
+      "phaseId": "processing",
+      "phaseName": "Processing",
+      "phaseNumber": "2",
+      "sectionId": "check-in",
+      "sectionTitle": "Day-of-Training Check-In",
+      "short": "Check-In",
+      "owner": "Operation Team",
+      "timing": "Class day",
+      "theme": "teal",
+      "title": "Day-of-Training Check-In",
+      "intro": "Student check-in is the gate to class. Check ID, payment, USI and attendance before the session starts.",
+      "stepCount": 7
+    },
+    {
+      "phaseId": "processing",
+      "phaseName": "Processing",
+      "phaseNumber": "2",
+      "sectionId": "training",
+      "sectionTitle": "Training Delivery",
+      "short": "Training",
+      "owner": "Trainer / Operation Team",
+      "timing": "During class",
+      "theme": "teal",
+      "title": "Training Delivery",
+      "intro": "Trainer delivers and assesses. Operation Team supports logistics and records events.",
+      "stepCount": 5
+    },
+    {
+      "phaseId": "processing",
+      "phaseName": "Processing",
+      "phaseNumber": "2",
+      "sectionId": "scan",
+      "sectionTitle": "Document Collection & Scan",
+      "short": "Collect & Scan",
+      "owner": "Operation Team",
+      "timing": "End of class / same day",
+      "theme": "teal",
+      "title": "Document Collection & Scan",
+      "intro": "Collect complete packs before trainer or students leave. Scan and upload same day or by 10am next business day.",
+      "stepCount": 6
+    },
+    {
+      "phaseId": "submission",
+      "phaseName": "Submission",
+      "phaseNumber": "3",
+      "sectionId": "qa",
+      "sectionTitle": "Document Review & QA",
+      "short": "Document QA",
+      "owner": "RTO Team",
+      "timing": "Same day / 1 business day",
+      "theme": "green",
+      "title": "Document Review & QA",
+      "intro": "This is the gate before external lodgment. Missing or unclear documents go back to Operation Team.",
+      "stepCount": 5
+    },
+    {
+      "phaseId": "submission",
+      "phaseName": "Submission",
+      "phaseNumber": "3",
+      "sectionId": "lodgment",
+      "sectionTitle": "SafeWork + AVETMISS Lodgment",
+      "short": "Lodgment",
+      "owner": "RTO Team",
+      "timing": "After QA pass",
+      "theme": "green",
+      "title": "SafeWork + AVETMISS Lodgment",
+      "intro": "Both lodgments have regulatory deadlines. The class is not closed until both are confirmed.",
+      "stepCount": 8
+    },
+    {
+      "phaseId": "submission",
+      "phaseName": "Submission",
+      "phaseNumber": "3",
+      "sectionId": "finance",
+      "sectionTitle": "Financial Reconciliation",
+      "short": "Finance",
+      "owner": "Finance / RTO Team",
+      "timing": "After QA pass",
+      "theme": "green",
+      "title": "Financial Reconciliation",
+      "intro": "Certificate release is held until payment is cleared or referred.",
+      "stepCount": 4
+    },
+    {
+      "phaseId": "submission",
+      "phaseName": "Submission",
+      "phaseNumber": "3",
+      "sectionId": "completion",
+      "sectionTitle": "Certificate Issue & Class Closure",
+      "short": "Completion",
+      "owner": "RTO Team",
+      "timing": "After QA/lodgment/payment",
+      "theme": "green",
+      "title": "Certificate Issue & Class Closure",
+      "intro": "Issue certificates only when document QA, SafeWork, AVETMISS and payment checks have passed.",
+      "stepCount": 6
+    }
+  ]
+};
+
+// Link options. Use relative links if you upload files into a /documents folder beside index.html.
+// For confidential files, replace these with SharePoint/OneDrive view-only links instead.
+const documentLinks = {
+  // Enrolment templates / records
+  "StudentList.xlsx": "https://careergo-my.sharepoint.com/:x:/g/personal/rto_careergo_com_au/IQDkrGRbOk7WQ4A1_QxSe-mgAUISLoTZOmauiVrQaxAgFzk?rtime=0ouhuiCy3kg",
+  "T01_Student_List.xlsx": "https://careergo-my.sharepoint.com/:x:/g/personal/rto_careergo_com_au/IQDkrGRbOk7WQ4A1_QxSe-mgAUISLoTZOmauiVrQaxAgFzk?rtime=0ouhuiCy3kg",
+  "T06_Communication_Templates.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQDwgtca1M2CQIHoode3fU6HAQRRQvCmMiziOISWBfsNrNQ?e=hSiIqg&wdLOR=cF22AD56C-2817-43C4-8033-D4FAEF99F277",
+
+  // Processing templates / records
+  "Day_of_Training_Check_In_&_Attendance_Sheet.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQCSlSTY261BT4s0c_omTyUyAclJt4ixnFgqffDzAvltlT8?e=TATxqt&wdLOR=cEF1BD56E-E4A6-48EE-B5E2-9643D461424D",
+  "T07_Day_of_Training_Check_In_&_Attendance_Sheet.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQCSlSTY261BT4s0c_omTyUyAclJt4ixnFgqffDzAvltlT8?e=TATxqt&wdLOR=cEF1BD56E-E4A6-48EE-B5E2-9643D461424D",
+  "Equipment_Resources_Checklist.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQAWrarP6UuDQ5mEPZ8m1GtkATpMzL-tmW1kH4sfm0XiTso?e=IqnJRT&wdLOR=c4096D8ED-77F6-46C4-B3A4-E59EA008CB8E",
+  "T08_Equipment_Resources_Checklist.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQAWrarP6UuDQ5mEPZ8m1GtkATpMzL-tmW1kH4sfm0XiTso?e=IqnJRT&wdLOR=c4096D8ED-77F6-46C4-B3A4-E59EA008CB8E",
+  "End_of_Class_Document_Pack_Checklist.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQB3BATZm8vPRYerlBmKaCp0Ad7AeKs1GnEGnnKJAPDzS8I?e=ViyXeE&wdLOR=c309A07B4-71F3-48B0-9C15-1BA3EC3AD906",
+  "T09_End_of_Class_Document_Pack_Checklist.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQB3BATZm8vPRYerlBmKaCp0Ad7AeKs1GnEGnnKJAPDzS8I?e=ViyXeE&wdLOR=c309A07B4-71F3-48B0-9C15-1BA3EC3AD906",
+  "Incident_Near_Miss_Form.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQCqS1T2Ii79QrxVX7jxJGgaARNEjR9ehJ3vzV0VS3mxUWA?e=WI5Td0&wdLOR=c3E1CDDE2-1F3B-4AD8-ADD0-F3F6035C7F09",
+  "T10_Incident_Near_Miss_Form.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQCqS1T2Ii79QrxVX7jxJGgaARNEjR9ehJ3vzV0VS3mxUWA?e=WI5Td0&wdLOR=c3E1CDDE2-1F3B-4AD8-ADD0-F3F6035C7F09",
+
+  // Submission templates / records
+  "T03_SafeWork_Lodgement_Tracker.xlsx": "https://careergo-my.sharepoint.com/:x:/g/personal/rto_careergo_com_au/IQAwBKZJfcvPQ696T72EreOwATpBEQgWDK_3pyiiTRFpQZc?e=lyzoHz&wdLOR=cAE9E8E01-4618-4E68-BC81-87012E0108DB",
+  "AVETMISS_Upload_QA_Checklist.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQAJR-HwFXfsSaH6m41CFG_kARPcMpbFCKclNlSRTgQIx4s?e=QaNRVL&wdLOR=c54D68271-3325-4845-82B8-43512D96D84F",
+  "T12_AVETMISS_Upload_QA_Checklist.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQAJR-HwFXfsSaH6m41CFG_kARPcMpbFCKclNlSRTgQIx4s?e=QaNRVL&wdLOR=c54D68271-3325-4845-82B8-43512D96D84F",
+  "ClassClosureReport.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQBnP85UkxgHT6hUijBRMuvkAfvqF_FbCHB2SmmGifAzOE0?e=AS596J&wdLOR=c779A0A6A-BD35-408D-A3B0-14796BD08A31",
+  "T11_Class_Closure_Report.docx": "https://careergo-my.sharepoint.com/:w:/g/personal/rto_careergo_com_au/IQBnP85UkxgHT6hUijBRMuvkAfvqF_FbCHB2SmmGifAzOE0?e=AS596J&wdLOR=c779A0A6A-BD35-408D-A3B0-14796BD08A31",
+  "T04_Escalation_Register.xlsx": "https://careergo-my.sharepoint.com/:x:/g/personal/rto_careergo_com_au/IQBiXNVz8BctTqtbDoY5G0hcAbjkBBAbXz4RLoz6gQY6G_4?e=71ta8u&wdLOR=c2342257D-1AD2-42D6-9E2B-AD5D54205D45",
+  "T05_Reissue_Amendment_Register.xlsx": "https://careergo-my.sharepoint.com/:x:/g/personal/rto_careergo_com_au/IQDCeXT3_x3ARq3cHmyE1JJXAdHtyKhc5om6EorojBZ743E?e=6cx18V&wdLOR=c68744A46-FE22-4F02-90FE-29E9956CCCD4"
+};
+
+const documentTemplates = [
+  {phase:"Enrolment", name:"T01 Student List", file:"T01_Student_List.xlsx", note:"Final class list with payment, ID, USI and LLN flags."},
+  {phase:"Enrolment", name:"T06 Communication Templates", file:"T06_Communication_Templates.docx", note:"Confirmation, reminder, change, cancellation and trainer communication templates."},
+  {phase:"Processing", name:"T07 Day-of-Training Check-In & Attendance Sheet", file:"T07_Day_of_Training_Check_In_&_Attendance_Sheet.docx", note:"Used for student check-in, ID/payment/USI checks and attendance."},
+  {phase:"Processing", name:"T08 Equipment Resources Checklist", file:"T08_Equipment_Resources_Checklist.docx", note:"Used before class to confirm equipment, resources and room readiness."},
+  {phase:"Processing", name:"T09 End-of-Class Document Pack Checklist", file:"T09_End_of_Class_Document_Pack_Checklist.docx", note:"Used to confirm each student document pack is complete before scanning."},
+  {phase:"Processing", name:"T10 Incident / Near-Miss Form", file:"T10_Incident_Near_Miss_Form.docx", note:"Used to record any incident, near-miss or behaviour issue during class."},
+  {phase:"Submission", name:"T03 SafeWork Lodgement Tracker", file:"T03_SafeWork_Lodgement_Tracker.xlsx", note:"Used by RTO Team to track SafeWork lodgment status per class."},
+  {phase:"Submission", name:"T12 AVETMISS Upload QA Checklist", file:"T12_AVETMISS_Upload_QA_Checklist.docx", note:"Used to check AVETMISS fields before upload/reporting."},
+  {phase:"Submission", name:"T11 Class Closure Report", file:"T11_Class_Closure_Report.docx", note:"1-page class closure summary for records and management oversight."},
+  {phase:"All Phases", name:"T04 Escalation Register", file:"T04_Escalation_Register.xlsx", note:"Used to log L2+ issues, urgent changes and compliance risks."},
+  {phase:"Submission", name:"T05 Reissue / Amendment Register", file:"T05_Reissue_Amendment_Register.xlsx", note:"Used to track certificate reissue, amendment or correction requests."}
+];
+
+let currentView = 'home';
+let selectedRoadmap = sopData.roadmap[0];
+let activeRole = 'all';
+let activePhaseSection = {enrolment:'timetable', processing:'pre-class', submission:'qa'};
+const themeColor = {purple:'#6f3cc3', teal:'#087f8c', green:'#3f8c2f'};
+const roles = ['all','RTO Team','Enrolment Team','Operation Team','Trainer','Finance','Ops Manager','Yoko','Thai / Alicia'];
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+function esc(s){return String(s ?? '').replace(/[&<>"]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+function phaseById(id){return sopData.phases.find(p=>p.id===id);}
+function sectionById(phase, sectionId){return phase.sections.find(s=>s.id===sectionId);}
+function ownerMatch(owner, role){return role==='all' || String(owner||'').toLowerCase().includes(role.toLowerCase());}
+function fileLink(file){
+  const clean = String(file||'').replace(/[‘’`]/g,'').trim();
+  if(!clean || clean.includes('[') || clean.includes('_Doc') || clean.includes('or ')) return `<code>${esc(file)}</code>`;
+  const href = documentLinks[clean];
+  if(!href){
+    return `<code>${esc(clean)}</code> <span class="badge">class-specific file</span>`;
+  }
+  return `<a class="doc-link" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(clean)}</a>`;
 }
+function stepAllText(p, sec, s){return [p.name,sec.title,s.title,s.owner,s.timing,s.action,s.system,s.output,s.keywords].join(' ');}
+function allSteps(){const out=[]; sopData.phases.forEach(p=>p.sections.forEach(sec=>sec.steps.forEach(s=>out.push({p,sec,s})))); return out;}
+
+function render(){renderHome(); renderPhaseViews(); renderHandoffsView(); renderDocumentsView(); bindStaticEvents(); setView('home', false); applySearch();}
+function renderHome(){
+  const m=sopData.meta;
+  $('#view-home').innerHTML = `
+    <div class="hero">
+      <div class="card hero-card"><div class="eyebrow">White Card Course · SOP Hub</div><h2>Main Roadmap</h2><p>${esc(m.subtitle)}. One place for the full workflow: Enrolment, Processing and Submission.</p><div class="quick-actions"><button class="btn primary" data-view="phase-enrolment">Start Enrolment</button><button class="btn" data-view="phase-processing">Open Processing</button><button class="btn" data-view="phase-submission">Open Submission</button></div></div>
+      <div class="card hero-card"><div class="meta-grid">${[['Version',m.version],['Owner',m.owner],['Audience',m.audience],['Review',m.review]].map(([k,v])=>`<div class="meta-item"><span>${esc(k)}</span><strong>${esc(v)}</strong></div>`).join('')}</div></div>
+    </div>
+    <div class="section"><div class="section-head"><div><h2>Three Main Pages</h2><p class="lead">Click a phase to open its own page.</p></div></div><div class="grid grid-3">${sopData.phases.map(p=>phaseCard(p)).join('')}</div></div>
+    <div class="section" id="main-roadmap"><div class="section-head"><div><h2>Virtual Roadmap</h2><p class="lead">Click any step. Details open below. You can also open the full phase page.</p></div><div class="chip-row" id="roleFiltersHome">${renderRoleChips()}</div></div><div class="card roadmap-wrap">${roadmapHtml()}</div><div class="detail-panel" id="mainDetail" style="--active:${themeColor[selectedRoadmap.theme]}">${roadmapDetailHtml(selectedRoadmap)}</div></div>`;
+}
+function phaseCard(p){return `<div class="card phase-card ${p.theme}" data-view="phase-${p.id}" style="--phase:${themeColor[p.theme]}"><div class="num">${p.number}</div><div class="eyebrow">${esc(p.owner)}</div><h3>${p.number}. ${esc(p.name)}</h3><p>${esc(p.summary)}</p><div class="done"><strong>Done when:</strong> ${esc(p.done)}</div></div>`;}
+function renderRoleChips(){return roles.map(r=>`<button class="chip ${r===activeRole?'active':''}" data-role="${esc(r)}">${r==='all'?'All roles':esc(r)}</button>`).join('');}
+function roadmapHtml(){
+  return `<div class="roadmap-grid">${sopData.phases.map(p=>`<div class="road-col" style="--phase:${themeColor[p.theme]}"><div class="road-col-head"><div class="eyebrow">Phase ${p.number}</div><h3>${esc(p.name)}</h3></div><div class="road-list">${p.sections.map(sec=>{
+    const r=sopData.roadmap.find(x=>x.phaseId===p.id && x.sectionId===sec.id);
+    const dim=!ownerMatch(sec.owner, activeRole);
+    return `<button class="road-node ${p.theme} ${selectedRoadmap.sectionId===sec.id?'active':''} ${dim?'dim':''}" data-road="${esc(sec.id)}" style="--phase:${themeColor[p.theme]}"><div class="node-top"><div><div class="eyebrow">${esc(sec.timing)}</div><h4>${esc(sec.title)}</h4><p>${esc(sec.owner)} · ${sec.steps.length} steps</p></div><div class="node-num">${p.number}.${p.sections.indexOf(sec)+1}</div></div></button>`;
+  }).join('')}</div></div>`).join('')}</div>`;
+}
+function roadmapDetailHtml(r){
+  const p=phaseById(r.phaseId), sec=sectionById(p,r.sectionId), color=themeColor[p.theme];
+  return `<div class="detail-inner"><div class="detail-top"><div><div class="eyebrow">Phase ${p.number}: ${esc(p.name)}</div><h2>${esc(sec.title)}</h2><p class="lead">${esc(sec.intro)}</p><div class="badges"><span class="badge">Owner: ${esc(sec.owner)}</span><span class="badge">Timing: ${esc(sec.timing)}</span><span class="badge">${sec.steps.length} steps</span></div><div class="detail-actions"><button class="btn primary" data-view="phase-${p.id}" data-open-section="${esc(sec.id)}">Open full phase page</button><button class="btn" data-copy-section="${esc(sec.id)}">Copy summary</button></div></div></div><div class="mini-steps">${sec.steps.map((s,i)=>`<div class="mini-step"><div class="n">${i+1}</div><div><h4>${esc(s.title)}</h4><p>${esc(s.action)}</p><div class="out"><strong>Output:</strong> ${esc(s.output)}</div></div><button class="btn small" data-view="phase-${p.id}" data-open-section="${esc(sec.id)}" data-open-step="${esc(s.id)}">Open</button></div>`).join('')}</div></div>`;
+}
+function renderPhaseViews(){sopData.phases.forEach(p=>{$('#view-phase-'+p.id).innerHTML=phaseViewHtml(p);});}
+function phaseViewHtml(p){
+  return `<div class="phase-title" style="--phase:${themeColor[p.theme]}"><div><div class="eyebrow">Phase ${p.number} · ${esc(p.owner)}</div><h2>${p.number}. ${esc(p.name)}</h2><p class="lead">${esc(p.summary)}</p></div><div class="quick-actions"><button class="btn" data-view="home">Back to Main</button><button class="btn link" data-copy-phase="${esc(p.id)}">Copy phase summary</button></div></div><div class="section-head" style="margin-top:18px"><div><h2>Phase Roadmap</h2><p class="lead">Click a section or step to jump to the details.</p></div><div class="chip-row" id="roleFilters-${p.id}">${renderRoleChips()}</div></div><div class="phase-layout"><div class="card phase-map" style="--phase:${themeColor[p.theme]}"><h3>Sections</h3>${p.sections.map((sec,i)=>`<button class="phase-map-btn ${activePhaseSection[p.id]===sec.id?'active':''}" data-section-jump="${esc(sec.id)}"><strong>${i+1}. ${esc(sec.short||sec.title)}</strong><br><span style="color:#64748b;font-size:12px">${esc(sec.owner)}</span></button>`).join('')}<button class="btn" data-view="home" style="margin-top:8px;justify-content:center">Main Roadmap</button></div><div class="phase-content">${p.sections.map(sec=>sectionHtml(p,sec)).join('')}${phaseOutputsHtml(p)}${phaseEscalationsHtml(p)}</div></div>`;
+}
+function sectionHtml(p,sec){return `<div class="card sub-section" id="section-${sec.id}" style="--phase:${themeColor[p.theme]}"><div class="sub-head"><div><div class="eyebrow">${esc(sec.timing)}</div><h3>${esc(sec.title)}</h3><p>${esc(sec.intro)}</p></div><div class="badges"><span class="badge">${esc(sec.owner)}</span><span class="badge">${sec.steps.length} steps</span></div></div><div class="steps">${sec.steps.map(s=>stepCard(p,sec,s)).join('')}</div></div>`;}
+function stepCard(p,sec,s){
+  const checkId='check-'+s.id;
+  const text=stepAllText(p,sec,s);
+  const dim=!ownerMatch(s.owner, activeRole);
+  return `<div class="step-card searchable ${dim?'hidden-by-filter':''}" id="step-${esc(s.id)}" data-owner="${esc(s.owner)}" data-search="${esc(text)}" style="--phase:${themeColor[p.theme]}"><div class="check"><input type="checkbox" id="${esc(checkId)}" data-check="${esc(checkId)}"></div><div><div class="step-title-row"><h4>${esc(s.title)}</h4><button class="btn small" data-road-from-step="${esc(sec.id)}">Show on roadmap</button></div><p>${esc(s.action)}</p><div class="step-meta"><span class="badge">Owner: ${esc(s.owner)}</span><span class="badge">Timing: ${esc(s.timing)}</span><span class="badge">System/File: ${esc(s.system)}</span></div><p class="out"><strong>Required output:</strong> ${esc(s.output)}</p></div></div>`;
+}
+function phaseOutputsHtml(p){return `<div class="card sub-section"><h3>Phase ${p.number} Outputs</h3><p class="lead">Main files or evidence produced by this phase.</p><div class="outputs" style="margin-top:12px">${p.outputs.map(o=>`<div class="output searchable" data-search="${esc([p.name,o.name,o.file,o.note].join(' '))}"><strong>${esc(o.name)}</strong><span>${esc(o.note)}</span><br>${fileLink(o.file)}</div>`).join('')}</div></div>`;}
+function phaseEscalationsHtml(p){return `<div class="card sub-section"><h3>Escalation Triggers</h3><div style="overflow:auto;margin-top:12px"><table class="simple-table"><thead><tr><th>Trigger</th><th>Escalate to</th><th>Within</th></tr></thead><tbody>${p.escalations.map(e=>`<tr class="searchable" data-search="${esc([p.name,e.trigger,e.to,e.time].join(' '))}"><td>${esc(e.trigger)}</td><td>${esc(e.to)}</td><td>${esc(e.time)}</td></tr>`).join('')}</tbody></table></div></div>`;}
+function renderHandoffsView(){
+  $('#view-handoffs').innerHTML=`<div class="phase-title" style="--phase:#2563eb"><div><div class="eyebrow">Quick Reference</div><h2>Handoffs & Folder Rules</h2><p class="lead">Each team owns producing the next team's input, not just finishing its own work.</p></div><button class="btn" data-view="home">Back to Main</button></div><div class="section"><div class="card" style="overflow:auto"><table class="simple-table"><thead><tr><th>From → To</th><th>Trigger</th><th>Action / Artefact</th><th>SLA</th></tr></thead><tbody>${sopData.handoffs.map(h=>`<tr class="searchable" data-search="${esc([h.from,h.to,h.trigger,h.action,h.sla].join(' '))}"><td><strong>${esc(h.from)} → ${esc(h.to)}</strong></td><td>${esc(h.trigger)}</td><td>${esc(h.action)}</td><td>${esc(h.sla)}</td></tr>`).join('')}</tbody></table></div></div><div class="section"><div class="section-head"><div><h2>Folder Rules</h2><p class="lead">The class folder is the compliance single source of truth.</p></div></div><div class="grid grid-3">${sopData.folderRules.map(f=>`<div class="card output searchable" data-search="${esc([f.folder,f.owner,f.contents].join(' '))}"><strong>${esc(f.folder)}</strong><span><strong>Owner:</strong> ${esc(f.owner)}</span><p>${esc(f.contents)}</p></div>`).join('')}</div></div>`;
+}
+function renderDocumentsView(){
+  const phaseOutputs=[];
+  sopData.phases.forEach(p=>p.outputs.forEach(o=>phaseOutputs.push({phase:p.name,...o})));
+  $('#view-documents').innerHTML=`
+    <div class="phase-title" style="--phase:#2563eb">
+      <div>
+        <div class="eyebrow">Quick Reference</div>
+        <h2>Documents & Templates</h2>
+        <p class="lead">Template buttons open the approved SharePoint / OneDrive files in a new tab. Class-specific evidence files stay in the class folder.</p>
+      </div>
+      <button class="btn" data-view="home">Back to Main</button>
+    </div>
+    <div class="section">
+      <div class="section-head"><div><h2>Approved templates and registers</h2><p class="lead">Use these links for the current working templates.</p></div></div>
+      <div class="tools">
+        ${documentTemplates.map(d=>`<div class="tool searchable" data-search="${esc([d.phase,d.name,d.file,d.note].join(' '))}"><div class="eyebrow">${esc(d.phase)}</div><strong>${esc(d.name)}</strong><p>${esc(d.note)}</p><p>${fileLink(d.file)}</p></div>`).join('')}
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head"><div><h2>Phase outputs</h2><p class="lead">These are the records expected in the class folder. Items marked class-specific should be saved in the relevant class folder, not in GitHub.</p></div></div>
+      <div class="tools">
+        ${phaseOutputs.map(d=>`<div class="tool searchable" data-search="${esc([d.phase,d.name,d.file,d.note].join(' '))}"><div class="eyebrow">${esc(d.phase)}</div><strong>${esc(d.name)}</strong><p>${esc(d.note)}</p>${d.file?'<p>'+fileLink(d.file)+'</p>':''}</div>`).join('')}
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head"><div><h2>Systems and tools</h2><p class="lead">Where the work is completed or recorded.</p></div></div>
+      <div class="tools">
+        ${sopData.tools.map(t=>`<div class="tool searchable" data-search="${esc([t.name,t.use].join(' '))}"><div class="eyebrow">System / Tool</div><strong>${esc(t.name)}</strong><p>${esc(t.use)}</p></div>`).join('')}
+      </div>
+    </div>
+    <div class="section"><div class="section-head"><div><h2>Glossary</h2><p class="lead">Common terms in plain English.</p></div></div><div class="card" style="overflow:auto"><table class="simple-table"><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>${sopData.terms.map(t=>`<tr class="searchable" data-search="${esc([t.term,t.meaning].join(' '))}"><td><strong>${esc(t.term)}</strong></td><td>${esc(t.meaning)}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+function setView(view, push=true){
+  currentView=view;
+  $$('.view').forEach(v=>v.classList.remove('active'));
+  $('#view-'+view)?.classList.add('active');
+  $$('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
+  if(push) window.scrollTo({top:0,behavior:'smooth'});
+  applySearch();
+}
+function bindStaticEvents(){
+  document.addEventListener('click', e=>{
+    const viewBtn=e.target.closest('[data-view]');
+    if(viewBtn){
+      const view=viewBtn.dataset.view;
+      const openSec=viewBtn.dataset.openSection;
+      const openStep=viewBtn.dataset.openStep;
+      setView(view);
+      if(openSec) setTimeout(()=>openSection(openSec, openStep), 80);
+      return;
+    }
+    const roleBtn=e.target.closest('[data-role]');
+    if(roleBtn){activeRole=roleBtn.dataset.role; refreshAll(); return;}
+    const road=e.target.closest('[data-road]');
+    if(road){selectRoad(road.dataset.road); return;}
+    const secJump=e.target.closest('[data-section-jump]');
+    if(secJump){openSection(secJump.dataset.sectionJump); return;}
+    const stepJump=e.target.closest('[data-step-jump]');
+    if(stepJump){openStep(stepJump.dataset.stepJump); return;}
+    const roadFrom=e.target.closest('[data-road-from-step]');
+    if(roadFrom){selectRoad(roadFrom.dataset.roadFromStep); setView('home'); setTimeout(()=>$('#main-roadmap')?.scrollIntoView({behavior:'smooth'}),80); return;}
+    const copySec=e.target.closest('[data-copy-section]'); if(copySec){copySection(copySec.dataset.copySection); return;}
+    const copyPhase=e.target.closest('[data-copy-phase]'); if(copyPhase){copyPhaseSummary(copyPhase.dataset.copyPhase); return;}
+  });
+  document.addEventListener('change', e=>{const cb=e.target.closest('[data-check]'); if(cb) localStorage.setItem(cb.dataset.check, cb.checked?'1':'0');});
+  $('#searchInput').addEventListener('input', applySearch);
+  $('#clearSearch').addEventListener('click',()=>{$('#searchInput').value='';applySearch();});
+  $('#homeBtn').addEventListener('click',()=>setView('home'));
+  $('#resetBtn').addEventListener('click',()=>{if(confirm('Reset all checklist ticks?')){$$('[data-check]').forEach(cb=>{cb.checked=false;localStorage.removeItem(cb.dataset.check);});}});
+}
+function refreshAll(){renderHome(); renderPhaseViews(); renderHandoffsView(); renderDocumentsView(); restoreChecks(); applySearch();}
+function selectRoad(sectionId){
+  selectedRoadmap=sopData.roadmap.find(r=>r.sectionId===sectionId)||selectedRoadmap;
+  renderHome(); restoreChecks(); applySearch();
+  setTimeout(()=>$('#mainDetail')?.scrollIntoView({behavior:'smooth',block:'start'}),50);
+}
+function openSection(sectionId, stepId){
+  const secEl=$('#section-'+sectionId); if(secEl){secEl.scrollIntoView({behavior:'smooth',block:'start'});}
+  if(stepId) setTimeout(()=>openStep(stepId), 180);
+}
+function openStep(stepId){
+  $$('.step-card').forEach(x=>x.classList.remove('highlight'));
+  const el=$('#step-'+stepId); if(el){el.classList.add('highlight'); el.scrollIntoView({behavior:'smooth',block:'center'});}
+}
+function restoreChecks(){$('[data-check]') && $$('[data-check]').forEach(cb=>{cb.checked=localStorage.getItem(cb.dataset.check)==='1';});}
+function copySection(sectionId){for(const p of sopData.phases){const sec=p.sections.find(s=>s.id===sectionId); if(sec){const txt=`${p.name} - ${sec.title}
+Owner: ${sec.owner}
+Timing: ${sec.timing}
+
+${sec.steps.map((s,i)=>`${i+1}. ${s.title}: ${s.action} Output: ${s.output}`).join('
+')}`; navigator.clipboard?.writeText(txt); alert('Step summary copied.'); return;}}}
+function copyPhaseSummary(phaseId){const p=phaseById(phaseId); const txt=`Phase ${p.number} - ${p.name}
+Owner: ${p.owner}
+Done when: ${p.done}`; navigator.clipboard?.writeText(txt); alert('Phase summary copied.');}
+function applySearch(){
+  const q=$('#searchInput').value.trim().toLowerCase();
+  const results=allSteps().filter(x=>(!q||stepAllText(x.p,x.sec,x.s).toLowerCase().includes(q)) && ownerMatch(x.s.owner, activeRole));
+  const searching=!!q;
+  $('#searchResults').classList.toggle('active', searching);
+  $('#searchCount').textContent = `${results.length} matching step${results.length===1?'':'s'}` + (activeRole!=='all'?` for ${activeRole}`:``);
+  $('#resultList').innerHTML = results.map(x=>`<div class="result-item"><div><strong>${esc(x.p.number+'. '+x.p.name+' · '+x.sec.title+' · '+x.s.title)}</strong><p>${esc(x.s.action)}</p><div class="badges"><span class="badge">${esc(x.s.owner)}</span><span class="badge">${esc(x.s.timing)}</span></div></div><button class="btn small" data-view="phase-${x.p.id}" data-open-section="${esc(x.sec.id)}" data-open-step="${esc(x.s.id)}">Open</button></div>`).join('');
+  $$('.step-card').forEach(el=>{
+    const text=(el.dataset.search||'').toLowerCase(); const owner=el.dataset.owner||'';
+    const show=(!q || text.includes(q)) && ownerMatch(owner, activeRole);
+    el.classList.toggle('hidden-by-filter', !show);
+  });
+  $$('.road-node').forEach(el=>{
+    const sec=sopData.roadmap.find(r=>r.sectionId===el.dataset.road); const p=phaseById(sec.phaseId); const s=sectionById(p,sec.sectionId);
+    el.classList.toggle('dim', !ownerMatch(s.owner, activeRole));
+  });
+  $('#emptyState').style.display = searching && results.length===0 ? 'block':'none';
+}
+render();
+restoreChecks();
 </script>
 </body>
 </html>
-
